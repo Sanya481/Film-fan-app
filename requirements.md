@@ -18,12 +18,19 @@ npm i eslint@8.13.0 -DE
 
 - eslint@8.13.0
 - eslint-config-htmlacademy@5.1.2
+<!-- Сам webpack -->
 - webpack@5.72.0
 - webpack-cli@4.9.2
+<!-- Локальный сервер -->
+<!-- Чтобы на каждое изменение кодовой базы не собирать бандл и не открывать public/index.html в браузере руками, настроим сервер для разработки. -->
 - webpack-dev-server@4.8.1
+<!-- Копирование файлов -->
 - copy-webpack-plugin@10.2.4
+<!-- Сам babel-loader - он для webpack. Нам еще нужен сам babel -->
 - @babel/core@7.17.9
+<!-- Чтобы babel знал под какие браузеры переводить код. Этот пакет позволяет babel смотреть на browserslist описанный в package.json и собирать код под нужные нам браузеры -->
 - @babel/preset-env@7.16.11
+<!-- Транспилятор - переводит современный JS в тот который поддерживается браузерами -->
 - babel-loader@8.2.4
 - css-loader@6.7.1
 - style-loader@3.3.1
