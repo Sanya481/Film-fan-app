@@ -13,11 +13,13 @@ const createUserTitleTemplate = () =>
 `;
 
 export default class UserTitleView {
+  #element = null;
+
   /**
    * @description Метод, чтобы получить шаблон разметки
    * @returns {HTMLElement} - шаблон разметки
    */
-  getTemplate() {
+  get template() {
     return createUserTitleTemplate();
   }
 
@@ -25,19 +27,19 @@ export default class UserTitleView {
    * @description Метод позволяет на основе шаблона создать DOM элемент
    * @returns {HTMLElement} - обьект DOM дерева (html разметка)
    */
-  getElement() {
+  get element() {
     // Если уже этот элемент создан, то просто возвращаем его
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   /**
    * Метод для удаления элемента
    */
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
