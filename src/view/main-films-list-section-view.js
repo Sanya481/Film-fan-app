@@ -1,4 +1,5 @@
-import { createElement } from '../render.js';
+// import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view';
 
 const createMainFilmsListSectionTemplate = () =>
   `
@@ -7,22 +8,22 @@ const createMainFilmsListSectionTemplate = () =>
 </section>
 `;
 
-export default class MainFilmsListSectionView {
-  #element = null;
+export default class MainFilmsListSectionView extends AbstractView {
+  // #element = null;
 
   get template() {
     return createMainFilmsListSectionTemplate();
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  // get element() {
+  //   if (!this.#element) {
+  //     this.#element = createElement(this.template);
+  //   }
 
-    return this.#element;
-  }
+  //   return this.#element;
+  // }
 
-  removeElement() {
-    this.#element = null;
-  }
+  // removeElement() {
+  //   this.#element = null;
+  // }
 }

@@ -1,4 +1,5 @@
-import { createElement } from '../render.js';
+// import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { humanizeTaskDueDate, DATE_FORMAT_D_M_Y, changeClassName } from '../utils.js';
 
 /**
@@ -180,31 +181,54 @@ const createFilmDetailsPopupTemplate = (movieDetails, movieComments) => {
   );
 };
 
-export default class FilmDetailsView {
+export default class FilmDetailsView extends AbstractView {
   // element - делаем приватным т.к. он нам нужен только внутри класса
-  #element = null;
+  // #element = null;
 
   #movieDetails = null;
   #movieComments = null;
 
   constructor(movieDetails, movieComments) {
+    /* Конструкторы в наследуемых классах должны обязательно вызывать super(...), и делать это перед использованием this.. */
+    super();
     this.#movieDetails = movieDetails;
     this.#movieComments = movieComments;
   }
+
+  /**
+   * @description Публичный метод для установки обработчика на крестик для закрытия попапа фильма
+   * @param {function} callback
+   */
+  setMoviePopupCloseHandler = (callback) => {
+    this._callback.click = callback;
+
+    this.element.querySelector('.film-details__close-btn')
+      .addEventListener('click', this.#onMoviePopupCloseBtnClick);
+  };
+
+  /**
+   * @description Функция для передачи в обработчик события на закрытие попапа фильма при нажатии на крестик
+   */
+  #onMoviePopupCloseBtnClick = () => {
+    this._callback.click();
+  };
 
   get template() {
     return createFilmDetailsPopupTemplate(this.#movieDetails, this.#movieComments);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  // get element() {
+  //   if (!this.#element) {
+  //     this.#element = createElement(this.template);
+  //   }
 
-    return this.#element;
-  }
+  //   return this.#element;
+  // }
 
-  removeElement() {
-    this.#element = null;
-  }
+  // /**
+  //  * @description Удаление ссылки на элемент
+  //  */
+  // removeElement() {
+  //   this.#element = null;
+  // }
 }

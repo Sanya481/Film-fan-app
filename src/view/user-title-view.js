@@ -1,4 +1,5 @@
-import { createElement } from '../render.js';
+// import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view';
 
 /**
  * @description Шаблон разметки (звание пользователя)
@@ -12,8 +13,8 @@ const createUserTitleTemplate = () =>
 </section>
 `;
 
-export default class UserTitleView {
-  #element = null;
+export default class UserTitleView extends AbstractView {
+  // #element = null;
 
   /**
    * @description Метод, чтобы получить шаблон разметки
@@ -23,23 +24,23 @@ export default class UserTitleView {
     return createUserTitleTemplate();
   }
 
-  /**
-   * @description Метод позволяет на основе шаблона создать DOM элемент
-   * @returns {HTMLElement} - обьект DOM дерева (html разметка)
-   */
-  get element() {
-    // Если уже этот элемент создан, то просто возвращаем его
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  // /**
+  //  * @description Метод позволяет на основе шаблона создать DOM элемент
+  //  * @returns {HTMLElement} - обьект DOM дерева (html разметка)
+  //  */
+  // get element() {
+  //   // Если уже этот элемент создан, то просто возвращаем его
+  //   if (!this.#element) {
+  //     this.#element = createElement(this.template);
+  //   }
 
-    return this.#element;
-  }
+  //   return this.#element;
+  // }
 
-  /**
-   * Метод для удаления элемента
-   */
-  removeElement() {
-    this.#element = null;
-  }
+  // /**
+  //  * Метод для удаления элемента
+  //  */
+  // removeElement() {
+  //   this.#element = null;
+  // }
 }

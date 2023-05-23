@@ -1,4 +1,5 @@
-import { createElement } from '../render';
+// import { createElement } from '../render';
+import AbstractView from '../framework/view/abstract-view';
 
 /**
  * @description Заглушка при отсутствии фильмов
@@ -21,22 +22,22 @@ const createEmptyFilmListTemplate = () => (
   `
 );
 
-export default class EmptyFilmListView {
-  #element = null;
+export default class EmptyFilmListView extends AbstractView {
+  // #element = null;
 
   get template() {
     return createEmptyFilmListTemplate();
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  // get element() {
+  //   if (!this.#element) {
+  //     this.#element = createElement(this.template);
+  //   }
 
-    return this.#element;
-  }
+  //   return this.#element;
+  // }
 
-  removeElement() {
-    this.#element = null;
-  }
+  // removeElement() {
+  //   this.#element = null;
+  // }
 }

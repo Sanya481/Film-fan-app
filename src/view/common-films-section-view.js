@@ -1,4 +1,5 @@
-import { createElement } from '../render.js';
+// import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view';
 
 /**
  * @description Шаблон разметки общего контейнера для фильмов
@@ -11,22 +12,24 @@ const createCommonFilmsSectionTemplate = () =>
   </section>
 `;
 
-export default class CommonFilmsSectionView {
-  #element = null;
+export default class CommonFilmsSectionView extends AbstractView {
+  // #element = null;
 
   get template() {
     return createCommonFilmsSectionTemplate();
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  /* !!! Все повторяющиеся методы у классов вынесли в отдельный класс AbstractView */
 
-    return this.#element;
-  }
+  // get element() {
+  //   if (!this.#element) {
+  //     this.#element = createElement(this.template);
+  //   }
 
-  removeElement() {
-    this.#element = null;
-  }
+  //   return this.#element;
+  // }
+
+  // removeElement() {
+  //   this.#element = null;
+  // }
 }
