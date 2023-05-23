@@ -1,4 +1,5 @@
-import { createElement } from '../render.js';
+// import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view';
 
 /**
  * @description Общее количество фильмов добавленное в приложение (отоброжается в подвале)
@@ -14,22 +15,22 @@ const createMainNavTemplate = () =>
 </nav>
   `;
 
-export default class MainNavigationView {
-  #element = null;
+export default class MainNavigationView extends AbstractView {
+  // #element = null;
 
   get template() {
     return createMainNavTemplate();
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  // get element() {
+  //   if (!this.#element) {
+  //     this.#element = createElement(this.template);
+  //   }
 
-    return this.#element;
-  }
+  //   return this.#element;
+  // }
 
-  removeElement() {
-    this.#element = null;
-  }
+  // removeElement() {
+  //   this.#element = null;
+  // }
 }

@@ -1,4 +1,5 @@
-import { createElement } from '../render.js';
+// import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view';
 
 /**
  * @description Шаблон для карточек фильма
@@ -11,22 +12,22 @@ const createMovieCardContainerTemplate = () =>
   </div>
 `;
 
-export default class MovieCardContainerView {
-  #element = null;
+export default class MovieCardContainerView extends AbstractView {
+  // #element = null;
 
   get template() {
     return createMovieCardContainerTemplate();
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  // get element() {
+  //   if (!this.#element) {
+  //     this.#element = createElement(this.template);
+  //   }
 
-    return this.#element;
-  }
+  //   return this.#element;
+  // }
 
-  removeElement() {
-    this.#element = null;
-  }
+  // removeElement() {
+  //   this.#element = null;
+  // }
 }

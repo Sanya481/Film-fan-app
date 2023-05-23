@@ -1,4 +1,5 @@
-import { createElement } from '../render.js';
+// import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { humanizeTaskDueDate, DATE_FORMAT_Y } from '../utils.js';
 
 
@@ -48,30 +49,65 @@ const createMovieCardTemplate = (movieInfo) => {
   );
 };
 
-export default class MovieCardView {
-  #element = null;
+export default class MovieCardView extends AbstractView {
+  // #element = null;
 
   // Один обьект (фильм)
   #filmCard = null;
 
   // Передаем карточку фильма
   constructor(filmCard) {
+    super();
+    // Карточка фильма
     this.#filmCard = filmCard;
   }
+
+  /**
+   * @description Публичный метод добавляет обработчик события на элемент (открытие попапа при клике на карточку)
+   */
+  setMovieCardClickHandler = (callback) => {
+    // Записали callback функцию в обьект, чтобы в дальнейшем можно было удалить обработчик события
+    this._callback.click = callback;
+
+    // На каждую карточку добавили обработчик события
+    this.element.querySelector('.film-card__link')
+      .addEventListener('click', this.#onMovieCardClick);
+  };
+
+  /**
+   * @description Открытие попапа по клику на фильм
+   * @param {object} evt
+   */
+  #onMovieCardClick = (evt) => {
+    evt.preventDefault();
+
+    // В функцию обработчик, параметром передаём карточку фильма
+    // this._callback.click = #openFilmDetailsPopup(filmCard)
+    // !!! this.#filmCard - содержит карточку фильма по которой кликнул пользователь
+    this._callback.click(this.#filmCard);
+  };
 
   get template() {
     return createMovieCardTemplate(this.#filmCard);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  // get element() {
+  //   if (!this.#element) {
+  //     this.#element = createElement(this.template);
+  //   }
 
-    return this.#element;
-  }
+  //   return this.#element;
+  // }
 
-  removeElement() {
-    this.#element = null;
-  }
+  // removeElement() {
+  //   this.#element = null;
+  // }
 }
+
+/*
+!!! ============= !!! Небольшое пояснение к view-шке
+Шаблон карточки фильма - разметка
+
+Отвечает за добавление обработчиков событий на элементы - только на те элементы, которые относятся к шаблону данного View
+
+*/

@@ -22,19 +22,23 @@ module.exports = {
     // Создаем экземпляр плагина
     new CopyPlugin({
       // скопировть всё из public и положить в build
-      patterns: [{from: 'public'}]
+      patterns: [{ from: 'public' }]
     }),
   ],
-  // Настройка babel (лоадер)
   module: {
     rules: [
+      // Настройка babel (лоадер)
       {
         // Для всех файлорв js...
         test: /\.js$/,
         // ...кроме тех, которые приходят из папки node_modules
         exclude: /(node_modules)/,
         // ...нужно применять babel-loader
-        use: []
+        use: ['babel-loader']
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
       }
     ]
   }

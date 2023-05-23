@@ -22,7 +22,7 @@ const createElement = (template) => {
 
 /**
  * Функция для отрисовки элемента
- * @param {AbstractView} component Компонент, который должен был отрисован
+ * @param {AbstractView} component Компонент, который должен быть отрисован
  * @param {HTMLElement} container Элемент в котором будет отрисован компонент
  * @param {string} place Позиция компонента относительно контейнера. По умолчанию - `beforeend`
  */

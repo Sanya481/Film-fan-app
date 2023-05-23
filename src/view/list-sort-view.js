@@ -1,4 +1,5 @@
-import { createElement } from '../render.js';
+// import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view';
 
 /**
  * @description Шаблон разметки (фильтры)
@@ -13,22 +14,22 @@ const createListSortTemplate = () =>
   </ul>
 `;
 
-export default class ListSortView {
-  #element = null;
+export default class ListSortView extends AbstractView {
+  // #element = null;
 
   get template() {
     return createListSortTemplate();
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  // get element() {
+  //   if (!this.#element) {
+  //     this.#element = createElement(this.template);
+  //   }
 
-    return this.#element;
-  }
+  //   return this.#element;
+  // }
 
-  removeElement() {
-    this.#element = null;
-  }
+  // removeElement() {
+  //   this.#element = null;
+  // }
 }
