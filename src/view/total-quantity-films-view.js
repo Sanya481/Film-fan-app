@@ -3,15 +3,25 @@ import AbstractView from '../framework/view/abstract-view';
 
 /**
  * @description Общее количество фильмов добавленное в приложение (отоброжается в подвале)
+ * @param {number} moviesCount - Общее количество фильмов
  * @returns {string}
  */
-const createTotalQuantityFilmsTemplate = () => ' <p>30 movies inside</p> ';
+const createTotalQuantityFilmsTemplate = (movies) => `<p>${movies} movies inside</p>`;
 
 export default class TotalQuantityFilmsView extends AbstractView {
   // #element = null;
+  #moviesCount;
+
+  /**
+   * @param {number} moviesCount - Общее количество фильмов
+   */
+  constructor(moviesCount) {
+    super();
+    this.#moviesCount = moviesCount;
+  }
 
   get template() {
-    return createTotalQuantityFilmsTemplate();
+    return createTotalQuantityFilmsTemplate(this.#moviesCount);
   }
 
   // get element() {

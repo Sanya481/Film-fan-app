@@ -132,3 +132,57 @@ export const getRandomArrayPart = (array) => {
  * @returns
  */
 export const changeClassName = (element, className) => element ? className : '';
+
+/**
+ * @description Функция помещает задачи без даты в конце списка,
+ возвращая нужный вес для колбэка sort
+ * @param {string} dateA
+ * @param {string} dateB
+ * @returns
+ */
+export function getWeightForNullDate(dateA, dateB) {
+  // Когда даты нет. Т.е. даты фильмов равны
+  if (dateA === null && dateB === null) {
+    return 0;
+  }
+
+  if (dateA === null) {
+    return 1;
+  }
+
+  if (dateB === null) {
+    return -1;
+  }
+
+  return null;
+}
+
+/**
+ * @description Сортировка даты по возрастанию
+ * @param {Object} filmDateA
+ * @param {Object} filmDateB
+ * @returns
+ */
+export function sortFilmDateUp(filmDateA, filmDateB) {
+  const weight = getWeightForNullDate(filmDateA.filmInfo.release.date, filmDateB.filmInfo.release.date);
+
+  return weight ?? dayjs(filmDateA.filmInfo.release.date).diff(dayjs(filmDateB.filmInfo.release.date));
+}
+
+/**
+ * @description Сортировка даты по убыванию
+ * @param {Object} filmDateA
+ * @param {Object} filmDateB
+ * @returns
+ */
+export function sortFilmDateDown(filmDateA, filmDateB) {
+  const weight = getWeightForNullDate(filmDateA.filmInfo.release.date, filmDateB.filmInfo.release.date);
+
+  return weight ?? dayjs(filmDateB.filmInfo.release.date).diff(dayjs(filmDateA.filmInfo.release.date));
+}
+
+export function updateItem(items, update) {
+  return items.map((item) => item.id === update.id ? update : item);
+}
+
+// export const filterMovieCards = (movieCard, filterType) => movieCard.userDetails.filterType === true;
