@@ -1,5 +1,5 @@
 // import { createElement } from '../render.js';
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView  from '../framework/view/abstract-stateful-view.js';
 import { humanizeTaskDueDate, DATE_FORMAT_D_M_Y, changeClassName } from '../utils.js';
 
 /**
@@ -129,7 +129,7 @@ const createFilmDetailsPopupTemplate = (movieDetails, movieComments) => {
               </div>
             </div>
 
-            <section class="film-details__controls">
+            <section class="film-details__controls" data-film-details__controls>
               <button type="button" class="film-details__control-button film-details__control-button--watchlist ${changeClassName(userDetails.watchlist, activeClass)}" id="watchlist" name="watchlist">Add to watchlist</button>
               <button type="button" class="film-details__control-button film-details__control-button--watched ${changeClassName(userDetails.alreadyWatched, activeClass)}" id="watched" name="watched">Already watched</button>
               <button type="button" class="film-details__control-button film-details__control-button--favorite ${changeClassName(userDetails.favorite, activeClass)}" id="favorite" name="favorite">Add to favorites</button>
@@ -145,13 +145,13 @@ const createFilmDetailsPopupTemplate = (movieDetails, movieComments) => {
               </ul>
 
               <div class="film-details__new-comment">
-                <div class="film-details__add-emoji-label"></div>
+                <div class="film-details__add-emoji-label" data-film-details__add-emoji-label></div>
 
                 <label class="film-details__comment-label">
                   <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
                 </label>
 
-                <div class="film-details__emoji-list">
+                <div class="film-details__emoji-list" data-film-details__emoji-list>
                   <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
                     <label class="film-details__emoji-label" for="emoji-smile">
                       <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
@@ -181,18 +181,29 @@ const createFilmDetailsPopupTemplate = (movieDetails, movieComments) => {
   );
 };
 
-export default class FilmDetailsView extends AbstractView {
+export default class FilmDetailsView extends AbstractStatefulView  {
   // element - делаем приватным т.к. он нам нужен только внутри класса
   // #element = null;
 
   #movieDetails = null;
   #movieComments = null;
 
-  constructor(movieDetails, movieComments) {
+  /**
+   * @param {Object} movieDetails - инфо карточки фильма
+   * @param {Array} movieComments - массив со всеми комментами
+   * @param {function} changeMovieGroup - колбек функция по изменению группы фильма
+   */
+  constructor(movieDetails, movieComments, changeMovieGroup) {
     /* Конструкторы в наследуемых классах должны обязательно вызывать super(...), и делать это перед использованием this.. */
     super();
     this.#movieDetails = movieDetails;
     this.#movieComments = movieComments;
+
+    // Передадим функцию обработчик изменения группы фильма(избранное, просмотренное...) через конструктор
+    this._callback.movieGroupBtnClick = changeMovieGroup;
+    // Используем делегирование
+    this.element.querySelector('[data-film-details__controls]').addEventListener('click', this.#onChangeMovieGroup);
+    // console.log(this)
   }
 
   /**
@@ -200,7 +211,7 @@ export default class FilmDetailsView extends AbstractView {
    * @param {function} callback
    */
   setMoviePopupCloseHandler = (callback) => {
-    this._callback.click = callback;
+    this._callback.closeBtnClick = callback;
 
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#onMoviePopupCloseBtnClick);
@@ -210,7 +221,42 @@ export default class FilmDetailsView extends AbstractView {
    * @description Функция для передачи в обработчик события на закрытие попапа фильма при нажатии на крестик
    */
   #onMoviePopupCloseBtnClick = () => {
-    this._callback.click();
+    this._callback.closeBtnClick();
+  };
+
+  /**
+   * @description Обработчик клика по изменению группы фильма(избранное, просмотренное...)
+   * @param {object} evt
+   */
+  #onChangeMovieGroup = (evt) => {
+    // Проверка, что пользователь кликает по кнопке
+    if (evt.target.tagName !== 'BUTTON') {
+      return;
+    }
+
+    // Передаем параметром атрибут name у кнопки
+    this._callback.movieGroupBtnClick(evt.target.name, evt);
+  };
+
+  /**
+   * @description Выбор смайлика к комменту
+   * @param {object} callback
+   */
+  setEmojiCommentChoice = (callback) => {
+    this._callback.emojiChoice = callback;
+
+    this.element.querySelector('[data-film-details__emoji-list]').addEventListener('click', this.#onEmojiCommentChoice);
+  };
+
+  /**
+   * @description Обработчик изменения смайлика
+   */
+  #onEmojiCommentChoice = (evt) => {
+    if (evt.target.tagName !== 'INPUT') {
+      return;
+    }
+
+    this._callback.emojiChoice(evt.target.value);
   };
 
   get template() {

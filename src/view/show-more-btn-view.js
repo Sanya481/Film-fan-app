@@ -30,7 +30,7 @@ export default class ShowMoreBtnView extends AbstractView {
 
   // !!! Передача callback функции обработчика события через публичный метод
   /**
-   * @description Публичный метод для навешивания обработчика события на кнопку "Показать ещё"
+   * @description Публичный метод View для установки обработчика события на кнопку "Показать ещё"
    * @param {function} callback
    */
   setShowMoreBtnClickHandler(callback) {
